@@ -1,0 +1,237 @@
+#This is a program to analyze the data present in the data set 'Singer.txt'. 
+
+#Converting the .txt file to a .csv file and importing it into RStudio
+
+> library(readr)
+> singer <- read_csv("D:/FALL 17 MSCS/CS 6313.002 STATS/MINI PROJECTS/singer.csv")
+
+#Exploratory Analysis of data using functions
+#Summary
+> summary(singer)
+    height      voice.part       
+ Min.   :60.0   Length:235        
+ 1st Qu.:65.0   Class :character  
+ Median :67.0   Mode  :character  
+ Mean   :67.3                     
+ 3rd Qu.:70.0                     
+ Max.   :76.0  
+
+#Histogram
+
+> hist(singer$height, xlab = "Height Range of Singers", ylab = "Frequency of heights", main = "Histogram of Singer data set", prob = TRUE)
+
+#Estimating if the heights of the singers follow a Normal Distribution
+
+> curve(dnorm(x, mean = mean(singer$height), sd = sd(singer$height)), add = TRUE)
+
+
+ 
+
+#Using 'by' function
+
+> by(singer$height,singer$voice.part,mean)
+singer$voice.part: Alto
+[1] 65.3871
+------------------------------------------------------------------------------------------- 
+singer$voice.part: Bass
+[1] 70.98462
+------------------------------------------------------------------------------------------- 
+singer$voice.part: Soprano
+[1] 64.12121
+------------------------------------------------------------------------------------------- 
+singer$voice.part: Tenor
+[1] 69.40476
+> by(singer$voice.part,singer$height,summary)
+singer$height: 60
+   Alto    Bass Soprano   Tenor 
+      1       0       4       0 
+------------------------------------------------------------------------------------------- 
+singer$height: 61
+   Alto    Bass Soprano   Tenor 
+      4       0       4       0 
+------------------------------------------------------------------------------------------- 
+singer$height: 62
+   Alto    Bass Soprano   Tenor 
+      3       0      11       0 
+------------------------------------------------------------------------------------------- 
+singer$height: 63
+   Alto    Bass Soprano   Tenor 
+      7       0       6       0 
+------------------------------------------------------------------------------------------- 
+singer$height: 64
+   Alto    Bass Soprano   Tenor 
+      8       0       5       2 
+------------------------------------------------------------------------------------------- 
+singer$height: 65
+   Alto    Bass Soprano   Tenor 
+      9       0      20       1 
+------------------------------------------------------------------------------------------- 
+singer$height: 66
+   Alto    Bass Soprano   Tenor 
+     13       3       9       4 
+------------------------------------------------------------------------------------------- 
+singer$height: 67
+   Alto    Bass Soprano   Tenor 
+      6       2       4       2 
+------------------------------------------------------------------------------------------- 
+singer$height: 68
+   Alto    Bass Soprano   Tenor 
+      2       8       2       6 
+------------------------------------------------------------------------------------------- 
+singer$height: 69
+   Alto    Bass Soprano   Tenor 
+      2       4       0       8 
+------------------------------------------------------------------------------------------- 
+singer$height: 70
+   Alto    Bass Soprano   Tenor 
+      6      12       1       4 
+------------------------------------------------------------------------------------------- 
+singer$height: 71
+   Alto    Bass Soprano   Tenor 
+      0       7       0       8 
+------------------------------------------------------------------------------------------- 
+singer$height: 72
+   Alto    Bass Soprano   Tenor 
+      1      13       0       2 
+------------------------------------------------------------------------------------------- 
+singer$height: 73
+   Alto    Bass Soprano   Tenor 
+      0       3       0       2 
+------------------------------------------------------------------------------------------- 
+singer$height: 74
+   Alto    Bass Soprano   Tenor 
+      0       5       0       1 
+------------------------------------------------------------------------------------------- 
+singer$height: 75
+   Alto    Bass Soprano   Tenor 
+      0       8       0       0 
+------------------------------------------------------------------------------------------- 
+singer$height: 76
+   Alto    Bass Soprano   Tenor 
+      0       0       0       2 
+
+#Other Data Exploratory functions
+> names(singer)
+[1] "height"     "voice.part"
+> head(singer)
+# A tibble: 6 x 2
+  height voice.part
+   <int>      <chr>
+1     64    Soprano
+2     62    Soprano
+3     66    Soprano
+4     65    Soprano
+5     60    Soprano
+6     61    Soprano
+> tail(singer)
+# A tibble: 6 x 2
+  height voice.part
+   <int>      <chr>
+1     70       Bass
+2     69       Bass
+3     72       Bass
+4     71       Bass
+5     74       Bass
+6     75       Bass
+> str(singer)
+Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	235 obs. of  2 variable:
+ $ height    : int  64 62 66 65 60 61 65 66 65 63 ...
+ $ voice.part: chr  "Soprano" "Soprano" "Soprano" "Soprano" ...
+ - attr(*, "spec")=List of 2
+  ..$ cols   :List of 2
+  .. ..$ height    : list()
+  .. .. ..- attr(*, "class")= chr  "collector_integer" "collector"
+   .. ..$ voice.part: list()
+  .. .. ..- attr(*, "class")= chr  "collector_character" "collector"
+  ..$ default: list()
+  .. ..- attr(*, "class")= chr  "collector_guess" "collector"
+  ..- attr(*, "class")= chr "col_spec"
+> boxplot(singer$height)
+> dim(singer)
+[1] 235   2
+
+ 
+#Using 'subset' function
+
+   > Bassvoicepart = subset(singer, singer$voice.part=="Bass")
+> summary(Bassvoicepart)
+     height       voice.part       
+ Min.   :66.00   Length:65         
+ 1st Qu.:69.00   Class :character  
+ Median :71.00   Mode  :character  
+ Mean   :70.98                     
+ 3rd Qu.:72.00                     
+ Max.   :75.00                     
+> hist(Bassvoicepart$height)
+
+ 
+
+
+
+> Tenorvoicepart = subset(singer, singer$voice.part=="Tenor")
+> summary(Tenorvoicepart)
+     height      voice.part       
+ Min.   :64.0   Length:42         
+ 1st Qu.:68.0   Class :character  
+ Median :69.0   Mode  :character  
+ Mean   :69.4                     
+ 3rd Qu.:71.0                     
+ Max.   :76.0                     
+> hist(Tenorvoicepart$height)
+
+
+ 
+
+> Altovoicepart = subset(singer, singer$voice.part=="Alto")
+> summary(Altovoicepart)
+     height       voice.part       
+ Min.   :60.00   Length:62         
+ 1st Qu.:64.00   Class :character  
+ Median :65.00   Mode  :character  
+ Mean   :65.39                     
+ 3rd Qu.:67.00                     
+ Max.   :72.00                     
+> hist(Altovoicepart$height)
+
+ 
+> Sopranovoicepart = subset(singer, singer$voice.part=="Soprano")
+> summary(Sopranovoicepart)
+     height       voice.part       
+ Min.   :60.00   Length:66         
+ 1st Qu.:62.00   Class :character  
+ Median :65.00   Mode  :character  
+ Mean   :64.12                     
+ 3rd Qu.:65.00                     
+ Max.   :70.00                     
+> hist(Sopranovoicepart$height)
+
+ 
+#Making subsets of singers based on 3 height ranges: 60-65, 65-70 and 70-76
+
+> Height1 = subset(singer, singer$height < 65 & singer$height >=60)
+> summary(Height1)
+     height       voice.part       
+ Min.   :60.00   Length:55         
+ 1st Qu.:62.00   Class :character  
+ Median :63.00   Mode  :character  
+ Mean   :62.45                     
+ 3rd Qu.:64.00                     
+ Max.   :64.00                     
+> Height2 = subset(singer, singer$height < 70 & singer$height >=65)
+> summary(Height2)
+     height       voice.part       
+ Min.   :65.00   Length:105        
+ 1st Qu.:65.00   Class :character  
+ Median :66.00   Mode  :character  
+ Mean   :66.59                     
+ 3rd Qu.:68.00                     
+ Max.   :69.00                     
+> Height3 = subset(singer, singer$height <=76 & singer$height >=70)
+> summary(Height3)
+     height       voice.part       
+ Min.   :70.00   Length:75         
+ 1st Qu.:70.00   Class :character  
+ Median :71.00   Mode  :character  
+ Mean   :71.84                     
+ 3rd Qu.:73.00                     
+ Max.   :76.00                     
